@@ -36,6 +36,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 72px;
+}
+
 /* ---- Sticky Navigation ---- */
 .site-nav {
   position: fixed;
@@ -582,6 +586,10 @@ html {
 .results-carousel .results-item .video-wrapper {
   box-shadow: none;
   border-radius: 8px;
+}
+
+#zero-shot-carousel .results-item {
+  text-align: center;
 }
 
 /* ---- Carousel Enhanced ---- */

@@ -1,5 +1,39 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
+function initSlickCarousel(selector) {
+  const carousel = $(selector);
+  if (!carousel.length || carousel.hasClass('slick-initialized')) {
+    return;
+  }
+
+  carousel.slick({
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    autoplay: false,
+    initialSlide: 0,
+  });
+}
+
+function applyVideoPlaybackRates(scope) {
+  const root = scope || document;
+  root.querySelectorAll('video[data-playback-rate]').forEach(function(video) {
+    const targetRate = parseFloat(video.dataset.playbackRate || '1');
+    if (!Number.isFinite(targetRate)) return;
+
+    function applyRate() {
+      video.defaultPlaybackRate = targetRate;
+      video.playbackRate = targetRate;
+    }
+
+    applyRate();
+    video.addEventListener('loadedmetadata', applyRate);
+    video.addEventListener('canplay', applyRate);
+    video.addEventListener('play', applyRate);
+  });
+}
+
 $(document).ready(function () {
   // Check for click events on the navbar burger icon
   $(".navbar-burger").click(function () {
@@ -8,37 +42,27 @@ $(document).ready(function () {
   });
 
   // Initialize buildup carousel
-  $('#buildup-carousel').slick({
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    autoplay: false,
-    initialSlide: 0,
-  });
+  initSlickCarousel('#buildup-carousel');
 
   // Initialize RBY1 teleoperation carousel
-  $('#rby1-carousel').slick({
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    autoplay: false,
-    initialSlide: 0,
-  });
+  initSlickCarousel('#rby1-carousel');
+
+  // Initialize zero-shot carousel
+  initSlickCarousel('#zero-shot-carousel');
 
   // Initialize robot evaluation carousel
-  $('#robot-eval-carousel').slick({
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    autoplay: false,
-    initialSlide: 0,
-  });
+  initSlickCarousel('#robot-eval-carousel');
+
+  applyVideoPlaybackRates(document.getElementById('zero-shot-carousel'));
 });
 
 $(window).on("load", function () {
+  initSlickCarousel('#buildup-carousel');
+  initSlickCarousel('#rby1-carousel');
+  initSlickCarousel('#zero-shot-carousel');
+  initSlickCarousel('#robot-eval-carousel');
+  applyVideoPlaybackRates(document.getElementById('zero-shot-carousel'));
+
   // Reset gifs once everything is loaded to synchronize playback.
   $('.preload').attr('src', function (i, a) {
     $(this).attr('src', '').removeClass('preload').attr('src', a);

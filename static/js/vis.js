@@ -148,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
     #rby1-carousel .results-item {
       text-align: center;
     }
+    #zero-shot-carousel .results-item {
+      text-align: center;
+    }
   `;
   document.head.appendChild(style);
 });
@@ -156,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function() {
   // Add clickable restart functionality to all videos (except buildup carousel)
   document.querySelectorAll('.video-wrapper').forEach(function(wrapper) {
-    if (wrapper.closest('#buildup-carousel') || wrapper.closest('#robot-eval-carousel') || wrapper.closest('#rby1-carousel') || wrapper.closest('#earthquake-section') || wrapper.closest('#text-to-scene-section')) return;
+    if (wrapper.closest('#buildup-carousel') || wrapper.closest('#robot-eval-carousel') || wrapper.closest('#rby1-carousel') || wrapper.closest('#zero-shot-carousel') || wrapper.closest('#earthquake-section') || wrapper.closest('#text-to-scene-section')) return;
     const video = wrapper.querySelector('video');
     if (video) {
       // Add controls to all videos
@@ -355,6 +358,84 @@ document.addEventListener('DOMContentLoaded', function() {
   $(rby1Carousel).on('afterChange', function() {
     const video = getRby1ActiveVideo();
     attachRby1EndedHandler(video);
+  });
+});
+
+// Zero-shot policy carousel: autoplay videos when visible, pause when not
+document.addEventListener('DOMContentLoaded', function() {
+  const zeroShotCarousel = document.getElementById('zero-shot-carousel');
+  if (!zeroShotCarousel) return;
+
+  let zeroShotInView = false;
+
+  function getZeroShotActiveVideo() {
+    return zeroShotCarousel.querySelector('.slick-current .video-wrapper video.lazy-video') || null;
+  }
+
+  function playZeroShotActiveVideo() {
+    if (!zeroShotInView) return;
+    const video = getZeroShotActiveVideo();
+    if (!video) return;
+    if (video.dataset.src && !video.querySelector('source')) {
+      loadVideoForSlide(video.closest('.results-item'));
+    }
+    video.play().catch(function() {});
+  }
+
+  function pauseZeroShotActiveVideo() {
+    const video = getZeroShotActiveVideo();
+    if (video) video.pause();
+  }
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        zeroShotInView = entry.isIntersecting;
+        if (zeroShotInView) {
+          playZeroShotActiveVideo();
+        } else {
+          pauseZeroShotActiveVideo();
+        }
+      });
+    }, { threshold: [0] });
+    observer.observe(zeroShotCarousel);
+  }
+
+  $(zeroShotCarousel).on('afterChange', function() {
+    const activeSlide = zeroShotCarousel.querySelector('.slick-current .results-item') ||
+                        zeroShotCarousel.querySelector('.slick-current');
+    if (activeSlide) {
+      loadVideoForSlide(activeSlide);
+    }
+    if (zeroShotInView) {
+      setTimeout(playZeroShotActiveVideo, 50);
+    }
+  });
+
+  $(zeroShotCarousel).on('beforeChange', function() {
+    const video = getZeroShotActiveVideo();
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  });
+
+  function attachZeroShotEndedHandler(video) {
+    if (!video || video._zeroShotEndedAttached) return;
+    video._zeroShotEndedAttached = true;
+    video.addEventListener('ended', function() {
+      if (!zeroShotInView) return;
+      setTimeout(function() {
+        $(zeroShotCarousel).slick('slickNext');
+      }, 500);
+    });
+  }
+
+  zeroShotCarousel.querySelectorAll('video.lazy-video').forEach(attachZeroShotEndedHandler);
+
+  $(zeroShotCarousel).on('afterChange', function() {
+    const video = getZeroShotActiveVideo();
+    attachZeroShotEndedHandler(video);
   });
 });
 

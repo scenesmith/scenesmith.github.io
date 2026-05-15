@@ -86,6 +86,7 @@
       <div class="nav-links">
         <a href="#buildup-section">Construction</a>
         <a href="#rby1-teleoperation-section">Teleoperation</a>
+        <a href="#zero-shot-policy-section">Zero-Shot</a>
         <a href="#text-to-scene-section">Text-to-Scene</a>
         <a href="#earthquake-section">Simulation</a>
         <a href="#room-scenes-section">Room Scenes</a>
@@ -510,6 +511,101 @@
             <div class="video-spinner"></div>
             <span class="video-view-label video-view-label-left">Third Person</span>
             <span class="video-view-label video-view-label-right">Head View</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zero-Shot External Policy Section -->
+  <section class="section" id="zero-shot-policy-section">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered fade-in">Zero-Shot External Policy in Generated Scenes</h2>
+      <div class="content has-text-justified mb-5">
+        <p>
+          SceneSmith scenes also support downstream interaction from an independently trained robot policy.
+          We use a policy from
+          <a href="https://arxiv.org/abs/2602.01067" target="_blank" rel="noopener noreferrer">A Systematic Study of Data Modalities and Strategies for Co-training Large Behavior Models for Robot Manipulation</a>,
+          which predates SceneSmith and was not trained on SceneSmith scenes or generated assets.
+          The successful language-conditioned executions below provide complementary qualitative evidence that
+          SceneSmith scenes are physically usable for downstream robotic manipulation.
+        </p>
+      </div>
+
+      <div id="zero-shot-carousel" class="carousel">
+        <div class="results-item">
+          <div class="prompt-tooltip-wrap">
+            <p class="has-text-centered has-text-grey is-italic mb-2">&ldquo;Take the apple from the bowl and place it onto the cutting board.&rdquo;</p>
+          </div>
+          <div class="video-wrapper rby1-video-wrapper" style="position: relative; display: inline-block; width: 100%; aspect-ratio: 16 / 9;">
+            <video class="lazy-video zero-shot-video" muted playsinline controls
+              data-src="./static/videos/zero_shot/scene153_apple_to_cutting_board_oxe-try1_recording.mp4"
+              data-playback-rate="2"
+              poster="./static/images/zero_shot/scene153_apple_to_cutting_board.jpg"
+              aria-label="Take the apple from the bowl and place it onto the cutting board."
+              style="width: 100%; height: 100%; object-fit: contain;"></video>
+            <div class="video-spinner"></div>
+            <span class="video-view-label video-view-label-left">2&times; Speed</span>
+          </div>
+        </div>
+        <div class="results-item">
+          <div class="prompt-tooltip-wrap">
+            <p class="has-text-centered has-text-grey is-italic mb-2">&ldquo;Take the lemon from the bowl and place it on the cutting board.&rdquo;</p>
+          </div>
+          <div class="video-wrapper rby1-video-wrapper" style="position: relative; display: inline-block; width: 100%; aspect-ratio: 16 / 9;">
+            <video class="lazy-video zero-shot-video" muted playsinline controls
+              data-src="./static/videos/zero_shot/scene153_lemon2_to_cutting_board_oxe-v1_recording.mp4"
+              data-playback-rate="2"
+              poster="./static/images/zero_shot/scene153_lemon2_to_cutting_board.jpg"
+              aria-label="Take the lemon from the bowl and place it on the cutting board."
+              style="width: 100%; height: 100%; object-fit: contain;"></video>
+            <div class="video-spinner"></div>
+            <span class="video-view-label video-view-label-left">2&times; Speed</span>
+          </div>
+        </div>
+        <div class="results-item">
+          <div class="prompt-tooltip-wrap">
+            <p class="has-text-centered has-text-grey is-italic mb-2">&ldquo;Pick up the glass on the left and place it on the plate on the left.&rdquo;</p>
+          </div>
+          <div class="video-wrapper rby1-video-wrapper" style="position: relative; display: inline-block; width: 100%; aspect-ratio: 16 / 9;">
+            <video class="lazy-video zero-shot-video" muted playsinline controls
+              data-src="./static/videos/zero_shot/scene015_glass1_to_plate0_ts1ms-rerun-base-a1_recording.mp4"
+              data-playback-rate="2"
+              poster="./static/images/zero_shot/scene015_glass1_to_plate0.jpg"
+              aria-label="Pick up the glass on the left and place it on the plate on the left."
+              style="width: 100%; height: 100%; object-fit: contain;"></video>
+            <div class="video-spinner"></div>
+            <span class="video-view-label video-view-label-left">2&times; Speed</span>
+          </div>
+        </div>
+        <div class="results-item">
+          <div class="prompt-tooltip-wrap">
+            <p class="has-text-centered has-text-grey is-italic mb-2">&ldquo;Take the lemon from the bowl and place it on the cutting board.&rdquo;</p>
+          </div>
+          <div class="video-wrapper rby1-video-wrapper" style="position: relative; display: inline-block; width: 100%; aspect-ratio: 16 / 9;">
+            <video class="lazy-video zero-shot-video" muted playsinline controls
+              data-src="./static/videos/zero_shot/scene159_lemon0_to_cutting_board_oxe-v1_recording.mp4"
+              data-playback-rate="2"
+              poster="./static/images/zero_shot/scene159_lemon0_to_cutting_board.jpg"
+              aria-label="Take the lemon from the bowl and place it on the cutting board."
+              style="width: 100%; height: 100%; object-fit: contain;"></video>
+            <div class="video-spinner"></div>
+            <span class="video-view-label video-view-label-left">2&times; Speed</span>
+          </div>
+        </div>
+        <div class="results-item">
+          <div class="prompt-tooltip-wrap">
+            <p class="has-text-centered has-text-grey is-italic mb-2">&ldquo;Pick up the glass and place it on the plate.&rdquo;</p>
+          </div>
+          <div class="video-wrapper rby1-video-wrapper" style="position: relative; display: inline-block; width: 100%; aspect-ratio: 16 / 9;">
+            <video class="lazy-video zero-shot-video" muted playsinline controls
+              data-src="./static/videos/zero_shot/scene157_tumbler7_to_plate7_ts1ms-wave9e-base_recording.mp4"
+              data-playback-rate="2"
+              poster="./static/images/zero_shot/scene157_tumbler7_to_plate7.jpg"
+              aria-label="Pick up the glass and place it on the plate."
+              style="width: 100%; height: 100%; object-fit: contain;"></video>
+            <div class="video-spinner"></div>
+            <span class="video-view-label video-view-label-left">2&times; Speed</span>
           </div>
         </div>
       </div>
@@ -968,7 +1064,7 @@
       </div>
     </div>
   </section>
-  <section class="section" id="overview-video-section">
+  <section class="section section-alt" id="overview-video-section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered fade-in">Method Overview Video</h2>
       <div class="content has-text-centered fade-in">
@@ -981,7 +1077,7 @@
   </section>
 
   <!-- Teaser Figure (from paper) -->
-  <section class="section teaser-section" id="teaser-figure-section">
+  <section class="section section-alt teaser-section" id="teaser-figure-section">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 has-text-centered fade-in">System Overview</h2>
       <div class="content has-text-centered fade-in">
@@ -1001,7 +1097,7 @@
   </section>
 
   <!-- Authors -->
-  <section class="section section-alt" id="authors-section">
+  <section class="section" id="authors-section">
     <div class="container is-max-desktop has-text-centered">
       <h2 class="title is-3 fade-in">Authors</h2>
       <p class="is-size-5 fade-in" style="color: var(--text-secondary);">
@@ -1034,7 +1130,7 @@
     </div>
   </section>
 
-  <section class="section section-alt" id="acknowledgements-section">
+  <section class="section" id="acknowledgements-section">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered fade-in">Acknowledgements</h2>
       <div class="fade-in" style="max-width: 800px; margin: 0 auto;">
@@ -1127,6 +1223,7 @@
           <div class="footer-links">
             <a href="#hero"><i class="fas fa-arrow-up"></i> Back to top</a>
             <a href="#buildup-section">Construction</a>
+            <a href="#zero-shot-policy-section">Zero-Shot</a>
             <a href="#room-scenes-section">Explore Scenes</a>
             <a href="#robot-eval-section">Robot Eval</a>
           </div>
